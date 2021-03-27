@@ -1,5 +1,3 @@
-# Charge map
-
 # Endpoint
 
 ```http://jerevl-app.jelastic.metropolia.fi/station/```
@@ -67,4 +65,5 @@
 ```
 
 # Example DELETE
+
 ```http://jerevl-app.jelastic.metropolia.fi/station/ID```
