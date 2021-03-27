@@ -21,9 +21,7 @@ router.get('/:id', async (req, res) => {
 
     let query = {}
 
-    query = await station
-      .findById(id)
-      .populate(connectionsPop)
+    query = await station.findById(id).populate(connectionsPop)
 
     res.json(query)
   } catch (e) {
