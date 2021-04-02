@@ -39,7 +39,6 @@ export default {
             if (Connections) {
                 Connections.forEach(async doc => {
                     await Connection.findByIdAndUpdate(doc.id, doc, { new: true })
-                    return doc.id
                 })
                 const connectionIds = Connections.map(doc => doc.id)
                 return await Station.findByIdAndUpdate(id, { Connections: connectionIds, ...other }, { new: true })
