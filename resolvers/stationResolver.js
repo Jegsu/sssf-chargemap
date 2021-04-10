@@ -1,6 +1,7 @@
 import Station from '../models/stationModel.js'
 import Connection from '../models/connectionModel.js'
 import { rectangleBounds } from '../helpers/rectangleBounds.js'
+import { AuthenticationError } from 'apollo-server-express'
 
 export default {
     Query: {
@@ -19,8 +20,12 @@ export default {
         }
     },
     Mutation: {
-        addStation: async (parent, args) => {
+        addStation: async (parent, args, { user }) => {
             const { Connections, ...other } = args
+
+            if (!user) {
+                throw new AuthenticationError('You are not authenticated')
+            }
 
             const newConnections = await Connection.insertMany(Connections)
             const connectionIds = newConnections.map(doc => doc._id)
@@ -32,9 +37,13 @@ export default {
 
             return newStation.save()
         },
-        modifyStation: async (parent, args) => {
+        modifyStation: async (parent, args, { user }) => {
 
             const { id, Connections, ...other } = args
+
+            if (!user) {
+                throw new AuthenticationError('You are not authenticated')
+            }
 
             if (Connections) {
                 Connections.forEach(async doc => {
@@ -46,8 +55,13 @@ export default {
                 return await Station.findByIdAndUpdate(id, { ...other }, { new: true })
             }
         },
-        deleteStation: async (parent, args) => {
+        deleteStation: async (parent, args, { user }) => {
             const { id } = args
+
+            if (!user) {
+                throw new AuthenticationError('You are not authenticated')
+            }
+
             return await Station.findByIdAndDelete(id)
         }
     }

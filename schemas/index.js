@@ -4,6 +4,7 @@ import currentTypeSchema from './currentTypeSchema.js'
 import connectionTypeSchema from './connectionTypeSchema.js'
 import connectionSchema from './connectionSchema.js'
 import stationSchema from './stationSchema.js'
+import userSchema from './userSchema.js'
 
 const linkSchema = gql`
    type Query {
@@ -21,4 +22,5 @@ export default [
   currentTypeSchema,
   levelSchema,
   stationSchema,
+  userSchema
 ]

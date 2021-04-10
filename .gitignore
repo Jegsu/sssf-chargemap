@@ -1,4 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
+
+*.pem
+ssl-cert.pem
+ssl-key.pem
+.gitignore
+
 ### Node template
 # Logs
 logs
