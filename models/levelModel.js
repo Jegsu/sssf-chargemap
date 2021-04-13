@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
@@ -8,4 +8,4 @@ const levelSchema = new Schema({
   Title: String
 })
 
-module.exports = mongoose.model('Level', levelSchema)
+export default mongoose.model('Level', levelSchema)

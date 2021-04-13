@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
@@ -9,4 +9,4 @@ const connectionSchema = new Schema({
   Quantity: Number
 })
 
-module.exports = mongoose.model('Connection', connectionSchema)
+export default mongoose.model('Connection', connectionSchema)
