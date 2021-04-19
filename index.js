@@ -33,9 +33,9 @@ import 'dotenv/config.js'
         const app = express()
         app.use(cors())
 
-        // disable if you want to use graphql playground
         app.use(helmet({
-          ieNoOpen: false
+          ieNoOpen: false,
+          contentSecurityPolicy: false
         }))
 
         process.env.NODE_ENV = process.env.NODE_ENV || 'development'
@@ -46,7 +46,7 @@ import 'dotenv/config.js'
           localhost(app, 8000, 3000)
         }
 
-        server.applyMiddleware({ app })
+        server.applyMiddleware({ app, path: '/graphql' })
 
     } catch (e) {
         console.log('server error: ' + e.message)
