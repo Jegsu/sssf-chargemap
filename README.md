@@ -1,70 +1,170 @@
 # Charge map
 
-# Endpoint
-
-```http://jerevl-app.jelastic.metropolia.fi/station/```
-
-# Example GET
-
-```http://jerevl-app.jelastic.metropolia.fi/station?limit=4```
-
-```http://jerevl-app.jelastic.metropolia.fi/station?topRight={"lat":60.2821946,"lng":25.036108}&bottomLeft={"lat":60.1552076,"lng":24.7816538}```
-
-```http://jerevl-app.jelastic.metropolia.fi/station?limit=4&topRight={"lat":60.2821946,"lng":25.036108}&bottomLeft={"lat":60.1552076,"lng":24.7816538}```
-
-# Example POST
-
+# Example Queries
 ```
 {
-    "Station": {
-        "Title": "New Station",
-        "Town": "Espoo",
-        "AddressLine1": "Some Address",
-        "StateOrProvince": "Southern Finland",
-        "Postcode": "02630",
-        "Location": {
-        "coordinates": [24.77772323548868, 60.203353130088146]
-        }
-    },
-    "Connections":[
-        {
-        "ConnectionTypeID": "5e39eecac5598269fdad81a0",
-        "CurrentTypeID": "5e39ef4a6921476aaf62404a",
-        "LevelID": "5e39edf7bb7ae768f05cf2bc",
-        "Quantity": 2
-        }
-    ]
+  station(id: "ID") {
+    Title
+    Town
+    AddressLine1
+  }
 }
 ```
 
-# Example PUT
-
-```http://jerevl-app.jelastic.metropolia.fi/station/ID```
-
 ```
 {
-"Station": {
-    "_id": "Some ID",
-    "Title": "New Title",
-    "Town": "Espoo",
-    "AddressLine1": "New Address",
-    "StateOrProvince": "Southern Finland",
-    "Postcode": "02630",
-    "Location": {
-        "coordinates": [24.77772323548868, 60.203353130088146]
-        }
-},
-"Connections":[
-        {
-        "_id": "Some ID",
-        "ConnectionTypeID": "5e39eecac5598269fdad81a0",
-        "CurrentTypeID": "5e39ef4a6921476aaf62404a",
-        "LevelID": "5e39edf7bb7ae768f05cf2bc",
-        "Quantity": 7
-        }
-  ]
+  stations(start: 15, limit: 3) {
+    Title
+    Town
+    AddressLine1
+    Location {
+      type
+      coordinates
+    }
+    Connections {
+      Quantity
+      ConnectionTypeID {
+        Title
+      }
+      CurrentTypeID {
+        Title
+      }
+      LevelID {
+        Title
+        Comments
+        IsFastChargeCapable
+      }
+    }
+  }
 }
 ```
 
-# Example DELETE
-```http://jerevl-app.jelastic.metropolia.fi/station/ID```
+```
+{
+  stations(bounds: {_southWest: {lat: 60.0918986743294, lng: 24.60319519042969}, _northEast: {lat: 60.38196898834704, lng: 24.94033813476563}}) {
+    Title
+    Town
+    AddressLine1
+    Location {
+      type
+      coordinates
+    }
+    Connections {
+      Quantity
+      ConnectionTypeID {
+        Title
+      }
+      CurrentTypeID {
+        Title
+      }
+      LevelID {
+        Title
+        Comments
+        IsFastChargeCapable
+      }
+    }
+  }
+}
+```
+
+# Example Authentication
+
+```
+mutation {
+ register(username: "", password: "")
+ {
+  id
+  username
+  token
+ } 
+}
+```
+
+```
+query {
+ login(username: "", password: "")
+ {
+  id
+  username
+  token
+ } 
+}
+```
+
+HTTP HEADERS
+```
+{
+  "Authorization": "Bearer TOKEN_HERE"
+}
+```
+
+# Example Mutations (needs auth)
+```
+mutation {
+ addStation( 
+   Connections: [
+   {
+        id: "60660126fa93153c3884280d",
+        ConnectionTypeID: "5e39eecac5598269fdad81a0",
+        CurrentTypeID: "5e39ef4a6921476aaf62404a",
+        LevelID: "5e39edf7bb7ae768f05cf2bc",
+        Quantity: 22
+  },
+  {
+    id: "5e3a02368637aa01278b6806",
+    ConnectionTypeID: "5e39eecac5598269fdad81c4",
+    LevelID: "5e39edf7bb7ae768f05cf2bd",
+    CurrentTypeID:"5e39ef4a6921476aaf62404b",
+    Quantity: 2,
+  }
+  ],
+   Postcode: "69",
+   Title: "yes5252",
+   AddressLine1: "yesss",
+   StateOrProvince: "yessses",
+   Town: "ys town",
+   Location: {
+      coordinates: [60.0918986743294, 24.60319519042969]
+  }
+ )
+ {
+   Title
+   AddressLine1
+   Town
+ }
+}
+```
+
+```
+mutation {
+ modifyStation(    
+   id: "60660126fa93153c3884280e",
+   Connections: [
+   {
+        id: "60660126fa93153c3884280d",
+        ConnectionTypeID: "5e39eecac5598269fdad81a0",
+        CurrentTypeID: "5e39ef4a6921476aaf62404a",
+        LevelID: "5e39edf7bb7ae768f05cf2bc",
+        Quantity: 22
+  },
+  {
+    id: "5e3a02368637aa01278b6806",
+    ConnectionTypeID: "5e39eecac5598269fdad81c4",
+    LevelID: "5e39edf7bb7ae768f05cf2bd",
+    CurrentTypeID:"5e39ef4a6921476aaf62404b",
+    Quantity: 2,
+  }
+  ],
+   Postcode: "69",
+   Title: "yes5252",
+   AddressLine1: "yesss",
+   StateOrProvince: "yessses",
+   Town: "ys town",
+ )
+ {
+   Title
+   AddressLine1
+   Town
+ }
+}
+```

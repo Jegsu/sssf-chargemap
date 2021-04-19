@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
@@ -7,7 +7,7 @@ const stationSchema = new Schema({
   AddressLine1: String,
   Town: String,
   StateOrProvince: String,
-  Postcode: Number,
+  Postcode: String,
   Location: {
     type: {
       type: String,
@@ -21,4 +21,4 @@ const stationSchema = new Schema({
   Connections: [{ type: Schema.Types.ObjectId, ref: 'Connection' }]
 })
 
-module.exports = mongoose.model('Station', stationSchema)
+export default mongoose.model('Station', stationSchema)

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
@@ -7,4 +7,4 @@ const currentTypeSchema = new Schema({
   Title: String
 })
 
-module.exports = mongoose.model('CurrentType', currentTypeSchema)
+export default mongoose.model('CurrentType', currentTypeSchema)
